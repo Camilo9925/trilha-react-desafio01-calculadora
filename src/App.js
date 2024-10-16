@@ -1,6 +1,6 @@
 
 import Input from './components/Input';
-import Button from './components/Button';
+import Button from './components/Button'
 
 import { Container, Content, Row } from './styles';
 import { useState } from 'react';
@@ -49,6 +49,35 @@ const App = () => {
 
   }
 
+  const handleMultiplyNumbers = () => {
+    if (firstNumber === '0') {
+        setFirstNumber(String(currentNumber));
+        setCurrentNumber('0');
+        setOperation('*');
+    } else {
+        const sum = Number(firstNumber) * Number(currentNumber);
+        setCurrentNumber(String(sum));
+        setOperation('')
+    }
+}
+
+const handleDivideNumbers = () => {
+    if (firstNumber === '0') {
+        setFirstNumber(String(currentNumber));
+        setCurrentNumber('0');
+        setOperation('/');
+    } else {
+        if (currentNumber !== '0') {
+            const sum = Number(firstNumber) / Number(currentNumber);
+            setCurrentNumber(String(sum));
+        } else {
+          alert('Divisão por zero não é permitida');
+        }
+        setOperation('')
+    }
+}
+
+
   const handleEquals = () => {
 
     if(firstNumber !== '0' && operation !== '' && currentNumber !== '0'){
@@ -58,6 +87,12 @@ const App = () => {
             break;
           case '-':
             handleMinusNumbers();
+            break;
+          case '*':
+            handleMultiplyNumbers();
+            break;
+          case '/':
+            handleDivideNumbers();
             break;
           default: 
             break;
@@ -71,8 +106,8 @@ const App = () => {
       <Content>
         <Input value={currentNumber}/>
         <Row>
-          <Button label="x"/>
-          <Button label="/"/>
+          <Button label="x" onClick={handleMultiplyNumbers}/>
+          <Button label="/" onClick={handleDivideNumbers}/>
           <Button label="c" onClick={handleOnClear}/>
           <Button label="."/>
         </Row>
